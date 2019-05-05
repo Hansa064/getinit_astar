@@ -30,7 +30,7 @@ def create_graph(data):
     return graph
 
 
-def astar(graph, source, target, h=lambda x: 0):
+def astar(graph, source, target):
     known = []
     known_nodes = {}
     closed = set()
@@ -49,6 +49,11 @@ def astar(graph, source, target, h=lambda x: 0):
         for node, costs in graph[node].items():
             if node in known_nodes:
                 continue
+            # A* is defined as: f(x) = g(x) + h(x)
+            # with g(x) beeing the costs from source to x
+            # and h(x) beeing the estemated costs from x to target.
+            # As we don't know the positions of the planets, we use "0" as
+            # estimated distance.
             tentative_g =  parent_costs + costs
             if node in known_nodes and tentative_g >= known_nodes[node][0]:
                 continue
